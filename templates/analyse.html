@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Analyse des mains - Baccarat Analyse{% endblock %}
+{% block content %}
+<div class="mx-auto" style="max-width: 500px;">
+    <h2 class="mb-4 text-center">Analyse des mains</h2>
+    <p class="text-center">Points disponibles : <strong>{{ user.points }}</strong></p>
+    <form method="post" action="{{ url_for('analyse') }}">
+        <div class="mb-3">
+            <label for="main_joueur" class="form-label">Main du Joueur (ex: 2♣8♣5♥)</label>
+            <input type="text" class="form-control" id="main_joueur" name="main_joueur" required>
+        </div>
+        <div class="mb-3">
+            <label for="main_banquier" class="form-label">Main du Banquier (ex: 7♥J♥)</label>
+            <input type="text" class="form-control" id="main_banquier" name="main_banquier" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Analyser</button>
+    </form>
+
+    {% if result %}
+        <div class="mt-4 p-3 border rounded bg-light text-dark">
+            <h5>Résultat de l'analyse :</h5>
+            <ul>
+                {% if result.joueur %}
+                    <li>Main Joueur : {{ result.joueur.victoires }} victoires, {{ result.joueur.defaites }} défaites, probabilité victoire {{ (result.joueur.prob_victoire * 100) | round(2) }}%</li>
+                {% else %}
+                    <li>Main Joueur : jamais rencontrée.</li>
+                {% endif %}
+                {% if result.banquier %}
+                    <li>Main Banquier : {{ result.banquier.victoires }} victoires, {{ result.banquier.defaites }} défaites, probabilité victoire {{ (result.banquier.prob_victoire * 100) | round(2) }}%</li>
+                {% else %}
+                    <li>Main Banquier : jamais rencontrée.</li>
+                {% endif %}
+            </ul>
+            <strong>{{ result.conclusion }}</strong>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

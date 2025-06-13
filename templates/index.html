@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Accueil - Baccarat Analyse{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">Bienvenue sur Baccarat Analyse</h1>
+    <p class="lead">Analysez les mains et améliorez votre stratégie au baccarat.</p>
+    {% if not session.get('username') %}
+      <a href="{{ url_for('signup') }}" class="btn btn-primary me-2">Créer un compte</a>
+      <a href="{{ url_for('login') }}" class="btn btn-outline-light">Se connecter</a>
+    {% else %}
+      <a href="{{ url_for('dashboard') }}" class="btn btn-success">Accéder au tableau de bord</a>
+    {% endif %}
+</div>
+{% endblock %}

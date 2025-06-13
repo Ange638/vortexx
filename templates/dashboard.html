@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Tableau de bord - Baccarat Analyse{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h2>Bonjour, {{ user.username }} !</h2>
+    <p class="lead">Vous avez <strong>{{ user.points }}</strong> points.</p>
+    <a href="{{ url_for('analyse') }}" class="btn btn-success mb-3">Faire une analyse</a>
+</div>
+{% endblock %}

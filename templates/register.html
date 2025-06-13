@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Créer un compte - Baccarat{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">📝 Créer un compte</h2>
+<form method="POST" action="{{ url_for('register') }}">
+  <div class="mb-3">
+    <label for="username" class="form-label">Nom d'utilisateur</label>
+    <input type="text" class="form-control" id="username" name="username" required>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Mot de passe</label>
+    <input type="password" class="form-control" id="password" name="password" required>
+  </div>
+  <div class="mb-3">
+    <label for="confirm_password" class="form-label">Confirmer le mot de passe</label>
+    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+  </div>
+  <button type="submit" class="btn btn-success w-100">Créer mon compte</button>
+</form>
+<p class="mt-3 text-center">
+  Déjà inscrit ? <a href="{{ url_for('login') }}">Se connecter</a>
+</p>
+{% endblock %}
