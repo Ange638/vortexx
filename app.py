@@ -228,6 +228,13 @@ def contact():
 
     return render_template('contact.html')
 
+@app.route('/cgu')
+def cgu():
+    return render_template('cgu.html')
+
+@app.route('/politique')
+def politique():
+    return render_template('politique.html')
 
     
 @app.errorhandler(404)
