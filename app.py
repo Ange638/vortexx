@@ -6,8 +6,7 @@ from collections import defaultdict
 import json
 import os
 from flask_mail import Mail, Message
-from fedapay.transaction import Transaction
-from fedapay.customer import Customer
+from fedapay import Transaction
 
 fedapay.api_key = "sk_live_ZMlUwZAkko02M_LZjPr2UnzA"  # Remplace par ta clé secrète
 fedapay.environment = "sandbox"  # "live" pour production
