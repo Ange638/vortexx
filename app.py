@@ -190,6 +190,24 @@ if __name__ == "__main__":
         return dict(current_year=datetime.now().year)
 
     app.run(debug=True)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        nom = request.form['nom']
+        email = request.form['email']
+        message = request.form['message']
+
+        # Pour l'instant, juste un message de confirmation
+        flash("Message bien reçu. Nous vous contacterons bientôt !", "success")
+        return redirect(url_for('contact'))
+
+    return render_template('contact.html')
+
     
 @app.errorhandler(404)
 def page_not_found(e):
