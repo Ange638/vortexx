@@ -7,6 +7,7 @@ import json
 import os
 from flask_mail import Mail, Message
 import fedapay
+from fedapay import Transaction
 
 fedapay.api_key = "sk_live_ZMlUwZAkko02M_LZjPr2UnzA"  # Remplace par ta clé secrète
 fedapay.environment = "sandbox"  # "live" pour production
@@ -123,6 +124,62 @@ def analyser_mains(main_j, main_b):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/abonnement', methods=['GET', 'POST'])
+def abonnement():
+    if 'user_id' not in session:
+        flash("Veuillez vous connecter", "warning")
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        montant = int(request.form['montant'])
+        username = session['username']
+
+        # Crée une transaction FedaPay
+        from fedapay import Transaction, Customer
+
+        try:
+            transaction = Transaction.create({
+                'description': f"Abonnement VORTEXstars - {username}",
+                'amount': montant,
+                'currency': {'iso': 'XOF'},
+                'callback_url': url_for('callback', _external=True),
+                'customer': {
+                    'firstname': username,
+                    'email': User.query.get(session['user_id']).email
+                }
+            })
+
+            return redirect(transaction['url'])
+        except Exception as e:
+            flash(f"Erreur: {str(e)}", "danger")
+
+    return render_template("abonnement.html")
+
+
+@app.route('/callback')
+def callback():
+    user = User.query.get(session['user_id'])
+
+    # Logique simplifiée : on ajoute les points selon le montant payé
+    # Tu peux aussi sécuriser avec la vérification FedaPay API (webhook recommandé en prod)
+    montant = request.args.get('amount', type=int, default=0)
+
+    if montant >= 1000:
+        user.points += 100
+    elif montant >= 500:
+        user.points += 40
+    elif montant >= 200:
+        user.points += 10
+    else:
+        flash("Montant non reconnu", "warning")
+        return redirect(url_for('dashboard'))
+
+    db.session.commit()
+    flash("Abonnement réussi, points ajoutés !", "success")
+    return redirect(url_for('dashboard'))
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
