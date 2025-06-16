@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center mt-5">
+  <h1 class="display-4">Erreur 500</h1>
+  <p class="lead">Une erreur inattendue s’est produite.</p>
+  <a href="{{ url_for('index') }}" class="btn btn-primary">Retour à l'accueil</a>
+</div>
+{% endblock %}
