@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h3 class="text-center">Choisissez un abonnement</h3>
+  <form method="post" class="mt-4">
+    <div class="form-group">
+      <label>Montant (XOF)</label>
+      <select class="form-control" name="montant" required>
+        <option value="200">200 FCFA - 10 points</option>
+        <option value="500">500 FCFA - 40 points</option>
+        <option value="1000">1000 FCFA - 100 points</option>
+      </select>
+    </div>
+    <button class="btn btn-success mt-3" type="submit">Payer avec FedaPay</button>
+  </form>
+</div>
+{% endblock %}
