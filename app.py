@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from collections import defaultdict
 import json
 import os
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev_key')
