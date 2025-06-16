@@ -6,6 +6,11 @@ from collections import defaultdict
 import json
 import os
 from flask_mail import Mail, Message
+import fedapay
+
+fedapay.api_key = "sk_live_ZMlUwZAkko02M_LZjPr2UnzA"  # Remplace par ta clé secrète
+fedapay.environment = "sandbox"  # "live" pour production
+
 
 app = Flask(__name__)
 # Configuration pour Gmail SMTP
